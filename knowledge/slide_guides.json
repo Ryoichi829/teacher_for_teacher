@@ -1,0 +1,1239 @@
+{
+  "schema_version": "1.0",
+  "document_type": "slide_guide",
+  "deck": {
+    "title": "AIが言葉を生成する仕組みを学ぼう",
+    "audience": "高等学校の生徒",
+    "lesson_duration_minutes": 100,
+    "total_slides": 39,
+    "language": "ja",
+    "source_presentation": "生成AI自然言語Ver5（広島大学附属高等学校）0623(3).pptx",
+    "source_speech_script": "スピーチ原稿(1).docx",
+    "created_on": "2026-09-17"
+  },
+  "app_catalog": {
+    "tokenization_app": {
+      "name": "文章の単語分割アプリ",
+      "url": "https://word-morpheme-ca5oewxqcdq6xvhcwqgoaz.streamlit.app/"
+    },
+    "word2vec_similarity_app": {
+      "name": "Word2Vec類似語検索アプリ",
+      "url": "https://word2vec-yyfpltniu5iob544pq9rcx.streamlit.app/"
+    },
+    "vector_visualization_app": {
+      "name": "単語ベクトル可視化アプリ",
+      "url": null
+    },
+    "attention_weight_app": {
+      "name": "Attention Weight可視化アプリ",
+      "url": null
+    },
+    "colab_language_model": {
+      "name": "Colab言語モデル実習",
+      "url": null
+    }
+  },
+  "usage_notes": [
+    "visible_contentはPowerPoint内の表示文字をスライド単位で抽出したものです。",
+    "speech_scriptはスピーチ原稿の文章を保持しています。",
+    "speech_scope_slidesが複数の場合、原稿では複数スライドをまとめて説明しています。",
+    "learning_goal、related_concepts、related_apps、student_activity、teacher_cautionsはスライドと原稿に基づく検索用メタデータです。",
+    "分かち書きアプリとWord2Vecアプリの詳細はknowledge/web_apps内のガイドと連携します。その他のWebアプリはURL未登録です。"
+  ],
+  "slides": [
+    {
+      "slide_number": 1,
+      "time_range_minutes": {
+        "start_minute": 0,
+        "end_minute": 1
+      },
+      "speech_scope_slides": [
+        1
+      ],
+      "title": "AIが言葉を生成する仕組み",
+      "visible_content": [
+        "AI が言葉を生成する仕組みを学ぼう",
+        "広島大学附属中・高等学校",
+        "2026年6月25日"
+      ],
+      "speech_script": "皆さんはChatGPTを使ったことがありますか？\n\n（挙手を確認）\n\n多くの人が使ったことがあると思います。\n\nでは質問です。\n\nChatGPTはなぜ文章を書けるのでしょうか？\n\nなぜ質問に答えられるのでしょうか？\n\n今日は生成AIを使う授業ではありません。\n\n生成AIがどのような仕組みで言葉を生成しているのかを、皆さん自身に体験しながら学んでもらいます。\n\n最終的には、皆さん自身で簡単な言語モデルを作るところまで体験します。",
+      "learning_goal": "授業の問いと到達点を共有する",
+      "related_concepts": [
+        "生成AI",
+        "ChatGPT",
+        "言語生成"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "ChatGPTの利用経験について挙手する"
+      ],
+      "teacher_cautions": [
+        "生成AIを使う授業ではなく、仕組みを体験的に学ぶ授業だと明確にする"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 2,
+      "time_range_minutes": {
+        "start_minute": 1,
+        "end_minute": 2
+      },
+      "speech_scope_slides": [
+        2
+      ],
+      "title": "コンピュータに文章を理解させるには",
+      "visible_content": [
+        "コンピュータに文章を理解させたい",
+        "どんな情報を与えたら良いか？"
+      ],
+      "speech_script": "まず考えてみましょう。\n\nコンピュータに文章を理解させたい。\n\nそのとき、どんな情報を与えればよいでしょうか？\n\n人間なら読めば意味が分かります。\n\nしかしコンピュータは文字を見ても意味は分かりません。\n\nまずはここから考えていきます。",
+      "learning_goal": "コンピュータに必要な情報を考える",
+      "related_concepts": [
+        "文章理解",
+        "数値化"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "コンピュータに何を与えるか予想する"
+      ],
+      "teacher_cautions": [
+        "人間の理解とコンピュータの処理を同一視しない"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 3,
+      "time_range_minutes": {
+        "start_minute": 2,
+        "end_minute": 3
+      },
+      "speech_scope_slides": [
+        3
+      ],
+      "title": "文章理解の具体例",
+      "visible_content": [
+        "例えば、「昨日インスタに写真をアップした。」という文章を理解させたい"
+      ],
+      "speech_script": "例えば、\n\n「昨日インスタに写真をアップした」\n\nという文章があるとします。\n\n皆さんは意味が分かりますよね。\n\nしかしコンピュータは、このままでは理解できません。\n\nまず何をする必要があるでしょうか。",
+      "learning_goal": "日常文を題材にコンピュータ処理の入口を考える",
+      "related_concepts": [
+        "文章",
+        "インスタ"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "文章を理解させる最初の処理を考える"
+      ],
+      "teacher_cautions": [],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 4,
+      "time_range_minutes": {
+        "start_minute": 3,
+        "end_minute": 4
+      },
+      "speech_scope_slides": [
+        4
+      ],
+      "title": "分かち書き",
+      "visible_content": [
+        "単語に分割（分かち書き）昨日 インスタ に 写真 を アップ し た 。"
+      ],
+      "speech_script": "最初に行うのが分かち書きです。\n\n文章を単語ごとに分割します。\n\n「昨日」「インスタ」「に」「写真」「を」「アップ」「し」「た」\n\nというように分けます。\n\n実は生成AIも、まず最初にこうした処理を行います。",
+      "learning_goal": "文章を単語単位に分割する必要を理解する",
+      "related_concepts": [
+        "分かち書き",
+        "トークン化",
+        "単語分割"
+      ],
+      "related_apps": [],
+      "student_activity": [],
+      "teacher_cautions": [
+        "実際の生成AIでは単純な単語単位に限らないが、この授業では概念理解を優先する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 5,
+      "time_range_minutes": {
+        "start_minute": 4,
+        "end_minute": 8
+      },
+      "speech_scope_slides": [
+        5
+      ],
+      "title": "文章を単語に分割する体験",
+      "visible_content": [
+        "文章を単語に分割してみよう！",
+        "アプリを起動する"
+      ],
+      "speech_script": "それでは実際に体験してみましょう。\n\nアプリを起動してください。\n\n（操作確認）\n\n好きな文章を入力してみてください。\n\n例えば、\n\n「昨日友達と映画を見た」\n\nなどです。\n\n実行してみると、コンピュータがどのように単語に分割しているかが分かります。\n\n（数名に結果を聞く）\n\n人間には当たり前のことですが、コンピュータにはまず単語に分ける処理が必要なのです。",
+      "learning_goal": "分かち書きをWebアプリで確認する",
+      "related_concepts": [
+        "分かち書き",
+        "単語分割"
+      ],
+      "related_apps": [
+        "tokenization_app"
+      ],
+      "student_activity": [
+        "好きな文章を入力して分割結果を比較する",
+        "数名が結果を共有する"
+      ],
+      "teacher_cautions": [
+        "アプリの結果が人間の予想と異なる場合も観察対象にする"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 6,
+      "time_range_minutes": {
+        "start_minute": 8,
+        "end_minute": 9
+      },
+      "speech_scope_slides": [
+        6
+      ],
+      "title": "単語をコンピュータに理解させるには",
+      "visible_content": [
+        "単語をコンピュータに理解させたい？",
+        "どんな情報を与えたら良いか？"
+      ],
+      "speech_script": "では次の問題です。\n\n単語に分けることはできました。\n\nしかし、\n\n「インスタ」\n\nという単語の意味をコンピュータに教えるにはどうしたらよいでしょうか。",
+      "learning_goal": "単語の意味をコンピュータで扱う方法を考える",
+      "related_concepts": [
+        "単語",
+        "意味",
+        "数値化"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "単語の意味をどう与えるか予想する"
+      ],
+      "teacher_cautions": [
+        "コンピュータが人間と同じ意味理解をするとは説明しない"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 7,
+      "time_range_minutes": {
+        "start_minute": 9,
+        "end_minute": 11
+      },
+      "speech_scope_slides": [
+        7
+      ],
+      "title": "インスタから連想する特徴",
+      "visible_content": [
+        "「インスタ」と聞いて、どんなイメージを持ちますか？",
+        "写真を投稿する いいねをもらう コメントをする ハッシュタグをつける フォロワーがいる"
+      ],
+      "speech_script": "皆さん、\n\n「インスタ」\n\nと聞いて何を思い浮かべますか？\n\n（生徒から発言をもらう）\n\n写真\n\n投稿\n\nフォロワー\n\nいいね\n\nコメント\n\nなどが出てくると思います。\n\nつまり私たちは言葉に対して様々なイメージを持っています。",
+      "learning_goal": "一つの単語に複数の特徴があることに気づく",
+      "related_concepts": [
+        "特徴",
+        "連想",
+        "インスタ"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "インスタから連想する言葉を発言する"
+      ],
+      "teacher_cautions": [],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 8,
+      "time_range_minutes": {
+        "start_minute": 11,
+        "end_minute": 13
+      },
+      "speech_scope_slides": [
+        8
+      ],
+      "title": "単語の特徴を数字で表す",
+      "visible_content": [
+        "「インスタ」という言葉の特徴を数字で表すと",
+        "10段階で評価します（0.0は「全然そうじゃない」、1.0は「とても強い特徴」）",
+        "写真投稿の度合い → 0.9 いいねの度合い → 0.8 コメントの度合い → 0.7 ハッシュタグの度合い → 0.8 フォロワーの度合い → 0.9",
+        "つまり「インスタ」という言葉は、[0.9, 0.8, 0.7, 0.8, 0.9]というような数字の並びで表すことができます！"
+      ],
+      "speech_script": "では、それを数字で表してみましょう。\n\n例えば、\n\n写真投稿の度合い\n\nいいねの度合い\n\nコメントの度合い\n\nなどを数字で表します。\n\nすると、\n\nインスタ\n\n＝\n\n[0.9, 0.8, 0.7, 0.8, 0.9]\n\nのように表現できます。\n\nもちろん実際にはこんな単純ではありませんが、\n\n「言葉を数字の並びで表す」\n\nという発想が重要です。",
+      "learning_goal": "言葉を数字の並びで表す発想をつかむ",
+      "related_concepts": [
+        "特徴量",
+        "数値表現",
+        "ベクトル"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "特徴ごとの度合いを考える"
+      ],
+      "teacher_cautions": [
+        "ここで示す5項目は説明用の単純化であり、実際のWord2Vecの次元に人が意味を付けるわけではない"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 9,
+      "time_range_minutes": {
+        "start_minute": 13,
+        "end_minute": 14
+      },
+      "speech_scope_slides": [
+        9
+      ],
+      "title": "単語のベクトル化",
+      "visible_content": [
+        "「インスタ」という言葉は、[0.9, 0.8, 0.7, 0.8, 0.9]",
+        "単語のベクトル化"
+      ],
+      "speech_script": "この数字の並びをベクトルと呼びます。\n\nAIは言葉そのものを扱うのではありません。\n\n言葉をベクトルに変換して扱います。\n\n今日の重要なキーワードの一つです。",
+      "learning_goal": "数字の並びをベクトルと呼ぶことを理解する",
+      "related_concepts": [
+        "ベクトル",
+        "単語ベクトル"
+      ],
+      "related_apps": [],
+      "student_activity": [],
+      "teacher_cautions": [
+        "ベクトルの数学的厳密さより、単語を数値として扱う考え方を優先する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 10,
+      "time_range_minutes": {
+        "start_minute": 14,
+        "end_minute": 16
+      },
+      "speech_scope_slides": [
+        10
+      ],
+      "title": "Word2Vec",
+      "visible_content": [
+        "Word2Vec",
+        "Word2Vecとは、単語の意味をベクトルで表現する手法・2013年にGoogleの研究者チームによって公開・言葉の意味は、その言葉の周りにどんな言葉が出てくるか で分かる"
+      ],
+      "speech_script": "Word2Vecという技術があります。\n\n2013年にGoogleの研究者によって公開されました。\n\n考え方は非常にシンプルです。\n\n「言葉の意味は、その周りに現れる言葉によって決まる」\n\nという考え方です。",
+      "learning_goal": "周囲に現れる言葉から単語の使われ方を学ぶ考え方を理解する",
+      "related_concepts": [
+        "Word2Vec",
+        "分布仮説",
+        "単語ベクトル"
+      ],
+      "related_apps": [],
+      "student_activity": [],
+      "teacher_cautions": [
+        "辞書的な意味を直接登録する仕組みだと誤解させない"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 11,
+      "time_range_minutes": {
+        "start_minute": 16,
+        "end_minute": 18
+      },
+      "speech_scope_slides": [
+        11
+      ],
+      "title": "周辺語から意味を推測する",
+      "visible_content": [
+        "例えば、『インスタ』という言葉を全く知らないと仮定しましょう。",
+        "『写真』『投稿』『撮影』といった言葉『いいね』『コメント』『シェア』という反応に関する言葉『フォロワー』『フォロー』といったつながりを表す言葉『SNS』『アプリ』といったデジタルに関する言葉",
+        "これらの周辺の言葉から、私たちは『インスタ』が・写真を共有するためのもの・他の人とつながれるもの・インターネット上のサービスというようなことが分かってきますよね"
+      ],
+      "speech_script": "例えば、\n\n皆さんが「インスタ」という言葉を知らなかったとします。\n\nしかし、\n\n写真\n\n投稿\n\nフォロワー\n\nコメント\n\nSNS\n\nという言葉が周りにたくさん出てきたらどうでしょう。\n\nなんとなく意味が想像できますよね。\n\nWord2Vecも同じ考え方です。",
+      "learning_goal": "周囲の言葉が単語の意味を推測する手掛かりになることを体験する",
+      "related_concepts": [
+        "Word2Vec",
+        "周辺語",
+        "文脈"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "未知語インスタの意味を周辺語から推測する"
+      ],
+      "teacher_cautions": [
+        "ここでの文脈はWord2Vecの周辺語であり、後半のAttentionによる文脈依存表現とは区別する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 12,
+      "time_range_minutes": {
+        "start_minute": 18,
+        "end_minute": 22
+      },
+      "speech_scope_slides": [
+        12,
+        13
+      ],
+      "title": "意味のあるベクトルの学習",
+      "visible_content": [
+        "どのように意味のあるベクトルを求めるのか？",
+        "「写真投稿の度合い」「いいねの度合い」というように、人間が意味を決めた数字の並びは使わない。",
+        "十分に大きな数（例えば300個）の数字の場所を用意する。それぞれの言葉を、その300個の数字の並びで表します。コンピュータが自動的に、似たような使われ方をする言葉は似た ような数字の並びになるように学習します。"
+      ],
+      "speech_script": "実際には人間が特徴を決めません。\n\n300個くらいの数字を用意します。\n\nそして大量の文章を読ませます。\n\nするとコンピュータが自動的に、\n\n似た言葉は似たベクトルになるように学習します。\n\n面白いのは、\n\n300個の数字が何を意味するのか、\n\n人間にも分からないことです。\n\nでも似た言葉同士は近くなります。",
+      "learning_goal": "人が特徴を決めず、使用例からベクトルを学習することを理解する",
+      "related_concepts": [
+        "Word2Vec",
+        "300次元",
+        "学習"
+      ],
+      "related_apps": [],
+      "student_activity": [],
+      "teacher_cautions": [
+        "300という次元数は例として扱い、常に固定だと断定しない"
+      ],
+      "source_alignment": "shared_range"
+    },
+    {
+      "slide_number": 13,
+      "time_range_minutes": {
+        "start_minute": 18,
+        "end_minute": 22
+      },
+      "speech_scope_slides": [
+        12,
+        13
+      ],
+      "title": "単語ベクトルの例",
+      "visible_content": [
+        "「インスタ」 → [0.2, 0.8, -0.3, 0.5, ...] （300個続く）「 X 」 → [0.3, 0.7, -0.2, 0.6, ...] （300個続く）「電車」 → [-0.5, 0.1, 0.8, -0.2, ...] （300個続く）「犬」 → [-0.3, -0.6, 0.4, 0.1, ...] （300個続く）",
+        "例えば",
+        "・それぞれの数字が具体的に「何の度合い」を表しているかは、 人間には分かりません・でも、似たような使われ方をする言葉（例：「インスタ」と「 X 」）は、 似たような数字の並びになります・全く違う使われ方をする言葉（例：「インスタ」と「電車」）は、 違う数字の並びになります",
+        "ポイントは"
+      ],
+      "speech_script": "実際には人間が特徴を決めません。\n\n300個くらいの数字を用意します。\n\nそして大量の文章を読ませます。\n\nするとコンピュータが自動的に、\n\n似た言葉は似たベクトルになるように学習します。\n\n面白いのは、\n\n300個の数字が何を意味するのか、\n\n人間にも分からないことです。\n\nでも似た言葉同士は近くなります。",
+      "learning_goal": "似た使われ方の単語が似た数値表現になることを理解する",
+      "related_concepts": [
+        "Word2Vec",
+        "単語ベクトル",
+        "類似"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "インスタ、X、電車、犬の数値例を比較する"
+      ],
+      "teacher_cautions": [
+        "各次元の意味は人間には通常解釈できないことを伝える"
+      ],
+      "source_alignment": "shared_range"
+    },
+    {
+      "slide_number": 14,
+      "time_range_minutes": {
+        "start_minute": 22,
+        "end_minute": 27
+      },
+      "speech_scope_slides": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "title": "3つの特徴による携帯の表現",
+      "visible_content": [
+        "「携帯」という言葉を最も基本的な3つの特徴で表してみると：通話の度合い → 8メッセージの度合い → 9インターネットの度合い → 9「携帯」= [8, 9, 9]これだと基本的な特徴は分かりますが、携帯電話の他の重要な特徴は表現できていませんね。",
+        "なぜ３００個なのか？"
+      ],
+      "speech_script": "ではなぜ300次元なのでしょう。\n\n携帯電話を3つの特徴で表してみると、\n\nかなり大雑把です。\n\n5つにすると少し詳しくなります。\n\nさらに増やすともっと細かく表現できます。\n\nクレヨンも同じです。\n\n12色より24色。\n\n24色より100色。\n\n色数が増えるほど細かな表現ができます。\n\nWord2Vecも同じ考え方です。",
+      "learning_goal": "次元が少ないと表現できる特徴が限られることを理解する",
+      "related_concepts": [
+        "次元",
+        "特徴",
+        "ベクトル"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "3つの特徴で何が表せて何が抜けるか考える"
+      ],
+      "teacher_cautions": [
+        "数値例は実際の学習済みベクトルではなく説明用である"
+      ],
+      "source_alignment": "shared_range"
+    },
+    {
+      "slide_number": 15,
+      "time_range_minutes": {
+        "start_minute": 22,
+        "end_minute": 27
+      },
+      "speech_scope_slides": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "title": "5つの特徴による携帯の表現",
+      "visible_content": [
+        "もう少し特徴を増やして５つにしてみましょう：通話の度合い → 8メッセージの度合い → 9インターネットの度合い → 9カメラ・写真の度合い → 8ゲームの度合い → 7「携帯」= [8, 9, 9, 8, 7]5つの特徴を使うと、携帯電話についてより詳しく表現できましたね。カメラ機能やゲームとしての使い方も表現できています。"
+      ],
+      "speech_script": "ではなぜ300次元なのでしょう。\n\n携帯電話を3つの特徴で表してみると、\n\nかなり大雑把です。\n\n5つにすると少し詳しくなります。\n\nさらに増やすともっと細かく表現できます。\n\nクレヨンも同じです。\n\n12色より24色。\n\n24色より100色。\n\n色数が増えるほど細かな表現ができます。\n\nWord2Vecも同じ考え方です。",
+      "learning_goal": "次元を増やすとより多くの違いを表現できることを理解する",
+      "related_concepts": [
+        "次元",
+        "特徴",
+        "ベクトル"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "3次元と5次元の表現力を比較する"
+      ],
+      "teacher_cautions": [],
+      "source_alignment": "shared_range"
+    },
+    {
+      "slide_number": 16,
+      "time_range_minutes": {
+        "start_minute": 22,
+        "end_minute": 27
+      },
+      "speech_scope_slides": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "title": "300次元で細かな特徴を表す",
+      "visible_content": [
+        "でも、まだ表現できていない特徴もたくさんあります：音楽を聴く動画を見るSNSを使う目覚まし時計として使う電卓として使う支払いに使う など...そこで実際のAIは300個もの特徴を使って、もっともっと細かい違いまで表現できるようにしているんです。"
+      ],
+      "speech_script": "ではなぜ300次元なのでしょう。\n\n携帯電話を3つの特徴で表してみると、\n\nかなり大雑把です。\n\n5つにすると少し詳しくなります。\n\nさらに増やすともっと細かく表現できます。\n\nクレヨンも同じです。\n\n12色より24色。\n\n24色より100色。\n\n色数が増えるほど細かな表現ができます。\n\nWord2Vecも同じ考え方です。",
+      "learning_goal": "高次元ベクトルが細かな違いを表現できる理由をつかむ",
+      "related_concepts": [
+        "300次元",
+        "高次元",
+        "特徴"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "携帯の他の用途を挙げる"
+      ],
+      "teacher_cautions": [
+        "300個の各軸が人間の付けた明確な特徴に対応するとは説明しない"
+      ],
+      "source_alignment": "shared_range"
+    },
+    {
+      "slide_number": 17,
+      "time_range_minutes": {
+        "start_minute": 22,
+        "end_minute": 27
+      },
+      "speech_scope_slides": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "title": "クレヨンの色数によるたとえ",
+      "visible_content": [
+        "・12色のクレヨンだと、基本的な色は描けます・24色のクレヨンだと、もっと微妙な色の違いも表現できます・100色のクレヨンがあれば、さらに細かい色の違いも表現できます！",
+        "クレヨンで絵を描くとき"
+      ],
+      "speech_script": "ではなぜ300次元なのでしょう。\n\n携帯電話を3つの特徴で表してみると、\n\nかなり大雑把です。\n\n5つにすると少し詳しくなります。\n\nさらに増やすともっと細かく表現できます。\n\nクレヨンも同じです。\n\n12色より24色。\n\n24色より100色。\n\n色数が増えるほど細かな表現ができます。\n\nWord2Vecも同じ考え方です。",
+      "learning_goal": "次元数と表現の細かさを身近なたとえで理解する",
+      "related_concepts": [
+        "次元",
+        "クレヨン",
+        "表現力"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "12色、24色、100色の表現力を比較する"
+      ],
+      "teacher_cautions": [
+        "クレヨンは高次元表現を直感的に説明するための比喩である"
+      ],
+      "source_alignment": "shared_range"
+    },
+    {
+      "slide_number": 18,
+      "time_range_minutes": {
+        "start_minute": 27,
+        "end_minute": 28
+      },
+      "speech_scope_slides": [
+        18
+      ],
+      "title": "Word2Vecでできること",
+      "visible_content": [
+        "Word2Vecで出来ること",
+        "・類似単語の検索・単語の足し算・単語の引き算・単語のアナロジー（類推）"
+      ],
+      "speech_script": "Word2Vecで何ができるでしょう。\n\n類似語検索\n\n単語の足し算\n\n単語の引き算\n\n類推\n\nなどができます。\n\n今日はまず類似語検索を体験します。",
+      "learning_goal": "単語ベクトルの代表的な利用方法を知る",
+      "related_concepts": [
+        "Word2Vec",
+        "類似語",
+        "ベクトル演算",
+        "類推"
+      ],
+      "related_apps": [],
+      "student_activity": [],
+      "teacher_cautions": [
+        "この授業では類似語検索を中心に扱う"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 19,
+      "time_range_minutes": {
+        "start_minute": 28,
+        "end_minute": 35
+      },
+      "speech_scope_slides": [
+        19
+      ],
+      "title": "Word2Vec類似語検索の体験",
+      "visible_content": [
+        "Word2Vec を体験してみよう！",
+        "アプリを起動"
+      ],
+      "speech_script": "アプリを起動してください。\n\n好きな単語を入力してみましょう。\n\n例えば、\n\nインスタ\n\n野球\n\n猫\n\nゲーム\n\nなど。\n\nどんな単語が近い言葉として出てくるでしょうか。\n\n（数分体験）\n\n面白い結果が出た人はいますか？\n\n（数名発表）\n\nAIは辞書を使っているのではありません。\n\n言葉の使われ方から意味を学習しているのです。",
+      "learning_goal": "入力語に近い単語を調べ、使われ方から学ぶ仕組みを確かめる",
+      "related_concepts": [
+        "Word2Vec",
+        "類似語検索"
+      ],
+      "related_apps": [
+        "word2vec_similarity_app"
+      ],
+      "student_activity": [
+        "好きな単語を入力する",
+        "結果を数名で共有する"
+      ],
+      "teacher_cautions": [
+        "結果を辞書的な正解とせず、学習データ中の使われ方を反映したものとして扱う"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 20,
+      "time_range_minutes": {
+        "start_minute": 35,
+        "end_minute": 37
+      },
+      "speech_scope_slides": [
+        20
+      ],
+      "title": "単語が似ているとは",
+      "visible_content": [
+        "単語が似ているとは、どういう事か",
+        "インスタX 自転車車",
+        "[ 9 8 7 ][ 8 8 6 ][ 1 9 8 ][ 2 8 9 ]"
+      ],
+      "speech_script": "では、\n\n似ている\n\nとは何でしょう。\n\nベクトルで考えると、\n\n数字の並びが似ているということです。",
+      "learning_goal": "似た単語はベクトルの数値の並びが近いことを理解する",
+      "related_concepts": [
+        "単語ベクトル",
+        "類似"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "4語のベクトルを比較する"
+      ],
+      "teacher_cautions": [
+        "提示ベクトルは説明用の簡略例である"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 21,
+      "time_range_minutes": {
+        "start_minute": 37,
+        "end_minute": 40
+      },
+      "speech_scope_slides": [
+        21
+      ],
+      "title": "ベクトルの可視化",
+      "visible_content": [
+        "ベクトルを可視化してみよう！",
+        "アプリを起動"
+      ],
+      "speech_script": "今度はベクトルを可視化してみましょう。\n\nアプリを起動してください。\n\n言葉同士の位置関係を見ることができます。\n\n近くにある言葉ほど意味が近いと考えてください。",
+      "learning_goal": "単語同士の位置関係を可視化して類似性を捉える",
+      "related_concepts": [
+        "ベクトル可視化",
+        "単語間距離",
+        "類似"
+      ],
+      "related_apps": [
+        "vector_visualization_app"
+      ],
+      "student_activity": [
+        "語を入力して位置関係を観察する"
+      ],
+      "teacher_cautions": [
+        "低次元の図は高次元ベクトルを簡略化した表示であることに注意する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 22,
+      "time_range_minutes": {
+        "start_minute": 40,
+        "end_minute": 42
+      },
+      "speech_scope_slides": [
+        22
+      ],
+      "title": "ベクトルの内積",
+      "visible_content": [
+        "「似ている度合い」を数字で表す",
+        "ベクトルの内積とは、単語同士がどれくらい似ているかを数値で示したもの",
+        "計算方法",
+        "１．n番目の数字同士をかけ算２．その結果を全部足す",
+        "※ 計算結果が大きければ大きいほど、2つの言葉は「似ている」と判断する。※ 実際のAIでは「コサイン類似度」という少し違う計算をしますが、 考え方は同じです。"
+      ],
+      "speech_script": "ここで数学を少し使います。\n\nベクトルの内積です。\n\n難しい計算を覚える必要はありません。\n\nポイントは一つ。\n\n内積が大きいほど似ている。\n\n今日はこれだけ覚えてください。",
+      "learning_goal": "内積を単語の似ている度合いを考える簡略な方法として理解する",
+      "related_concepts": [
+        "内積",
+        "類似度",
+        "コサイン類似度"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "対応する数字を掛けて合計する手順を確認する"
+      ],
+      "teacher_cautions": [
+        "計算技能の習得を目的にしない",
+        "実際にはコサイン類似度などが使われることを補足する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 23,
+      "time_range_minutes": {
+        "start_minute": 42,
+        "end_minute": 44
+      },
+      "speech_scope_slides": [
+        23
+      ],
+      "title": "内積の計算例",
+      "visible_content": [
+        "インスタとXの内積： 9×8 ＋ 8×8 ＋ 7×6 ＝ 178インスタと自転車の内積： 9×1 ＋ 8×9 ＋ 7×8 ＝ 137インスタと車の内積： 9×2 ＋ 8×8 ＋ 7×9 ＝ 145",
+        "インスタX 自転車車",
+        "[ 9 8 7 ][ 8 8 6 ][ 1 9 8 ][ 2 8 9 ]"
+      ],
+      "speech_script": "実際に計算すると、\n\nインスタとXが最も大きな値になります。\n\nつまり最も似ていると判断できます。\n\nAIはこうした計算を大量に行っています。",
+      "learning_goal": "内積の大小から類似度を比較する",
+      "related_concepts": [
+        "内積",
+        "Word2Vec",
+        "類似度"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "インスタと3語の計算結果を比較する"
+      ],
+      "teacher_cautions": [
+        "ベクトルの大きさの影響を無視した説明用の例である"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 24,
+      "time_range_minutes": {
+        "start_minute": 44,
+        "end_minute": 50
+      },
+      "speech_scope_slides": [
+        24
+      ],
+      "title": "前半のワークシート",
+      "visible_content": [
+        "ワークシートにチャレンジしよう"
+      ],
+      "speech_script": "それではワークシートに取り組んでください。\n\n10分間取ります。\n\n今日学んだことを整理してみましょう。\n\n分からないところがあれば質問してください。\n\n（巡回しながら支援）\n\nでは後半は、\n\nWord2Vecだけでは解決できない問題について考えます。\n\n実は言葉には、もっと難しい問題があるのです。\n\nAIが言葉を生成する仕組みを学ぼう",
+      "learning_goal": "分かち書き、ベクトル、Word2Vec、内積を自分の言葉で整理する",
+      "related_concepts": [
+        "ワークシート",
+        "振り返り"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "ワークシートに取り組む",
+        "分からない点を質問する"
+      ],
+      "teacher_cautions": [
+        "正答確認だけでなく、生徒がどこまで概念を言語化できたかを見る"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 25,
+      "time_range_minutes": {
+        "start_minute": 50,
+        "end_minute": 52
+      },
+      "speech_scope_slides": [
+        25
+      ],
+      "title": "やばいの多義性",
+      "visible_content": [
+        "「やばい」という単語の意味は？"
+      ],
+      "speech_script": "後半は、Word2Vecだけでは解決できない問題について考えます。\n\n皆さんに質問です。\n\n「やばい」\n\nという言葉を聞くと、どんな意味を思い浮かべますか？\n\n（生徒に発言させる）\n\n危険\n\nすごい\n\n最高\n\n困った\n\nいろいろな意味がありますね。\n\n実は、この言葉は文脈によって意味が変わります。",
+      "learning_goal": "同じ単語でも文脈によって意味が変わることに気づく",
+      "related_concepts": [
+        "多義語",
+        "文脈",
+        "やばい"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "やばいから思い浮かぶ意味を発言する"
+      ],
+      "teacher_cautions": [
+        "生徒の用例を否定せず、文脈依存性へつなげる"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 26,
+      "time_range_minutes": {
+        "start_minute": 52,
+        "end_minute": 54
+      },
+      "speech_scope_slides": [
+        26
+      ],
+      "title": "文脈で変わるやばいの意味",
+      "visible_content": [
+        "この動画、やばい→ すごい・面や白い",
+        "テストの点数、やばい→ 困った・最悪",
+        "推しのライブ、やばい→ 最高"
+      ],
+      "speech_script": "見てみましょう。\n\n「この動画、やばい」\n\nこれはどういう意味でしょう？\n\n（生徒）\n\nすごい\n\n面白い\n\nですね。\n\nでは、\n\n「テストの点数、やばい」\n\nはどうでしょう？\n\n（生徒）\n\nまずい\n\n困った\n\nですね。\n\nさらに、\n\n「推しのライブ、やばい」\n\nは？\n\n最高\n\n感動した\n\nですね。\n\n同じ「やばい」なのに意味が変わっています。",
+      "learning_goal": "周囲の語によって同じ単語の意味が変わることを具体例で確認する",
+      "related_concepts": [
+        "文脈",
+        "多義語",
+        "やばい"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "動画、点数、ライブの例で意味を答える"
+      ],
+      "teacher_cautions": [
+        "スライドの「面や白い」は「面白い」の誤記と考えられるため、授業では正しく読む"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 27,
+      "time_range_minutes": {
+        "start_minute": 54,
+        "end_minute": 55
+      },
+      "speech_scope_slides": [
+        27
+      ],
+      "title": "AIは意味の違いをどう区別するか",
+      "visible_content": [
+        "AIはどうやって区別するの？"
+      ],
+      "speech_script": "では質問です。\n\nAIはどうやって区別するのでしょう？\n\nWord2Vecでは、\n\n「やばい」はいつも同じベクトルです。\n\nでも実際には意味が変わります。\n\nどうしたらいいのでしょうか。",
+      "learning_goal": "固定ベクトルだけでは文脈による意味変化を扱いにくいという課題を捉える",
+      "related_concepts": [
+        "Word2Vec",
+        "固定ベクトル",
+        "文脈"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "Word2Vecの限界を予想する"
+      ],
+      "teacher_cautions": [
+        "Word2Vec全般が文脈を全く利用しないという単純化には注意する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 28,
+      "time_range_minutes": {
+        "start_minute": 55,
+        "end_minute": 57
+      },
+      "speech_scope_slides": [
+        28
+      ],
+      "title": "Attention",
+      "visible_content": [
+        "Attention",
+        "Attentionとは、ある単語を考えるときに、文の中のほかの単語との内積を計算し、「どの単語をどれくらい参考にするか」を決める仕組み"
+      ],
+      "speech_script": "そこで登場するのがAttentionです。\n\nAttentionとは、\n\nある単語を考えるときに、\n\n周りの単語との関係を計算し、\n\nどの単語をどれくらい参考にするかを決める仕組みです。\n\nここでも内積が使われています。\n\n前半で学んだことが登場しましたね。",
+      "learning_goal": "周囲の単語との関係から参照する度合いを決める仕組みを理解する",
+      "related_concepts": [
+        "Attention",
+        "内積",
+        "文脈"
+      ],
+      "related_apps": [],
+      "student_activity": [],
+      "teacher_cautions": [
+        "詳細な行列計算には踏み込まず、関係を見る仕組みに焦点を当てる"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 29,
+      "time_range_minutes": {
+        "start_minute": 57,
+        "end_minute": 58
+      },
+      "speech_scope_slides": [
+        29
+      ],
+      "title": "Word2VecとAttentionの違い",
+      "visible_content": [
+        "なぜ凄いのか？",
+        "「やばい」はいつも同じベクトル",
+        "「やばい」の周りの単語を見て どの単語との関係が強いかを計算 「この動画やばい」 →「動画」など周囲の言葉を参考にする「テストの点数やばい」 →「点数」など周囲の言葉を参考にするこの仕組みを使うことで 文の中で単語の意味が変化するようになる",
+        "Word2Vecでは",
+        "Attentionでは"
+      ],
+      "speech_script": "Word2Vecでは\n\n「やばい」はいつも同じ意味でした。\n\nしかしAttentionでは、\n\n周りの単語を参考にします。\n\n「動画」\n\n「点数」\n\n「ライブ」\n\nなどを見ることで、\n\nその場に応じて意味を変えられるようになったのです。",
+      "learning_goal": "固定的な単語表現と文脈を反映する仕組みの違いを理解する",
+      "related_concepts": [
+        "Word2Vec",
+        "Attention",
+        "文脈依存"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "動画、点数、ライブの周辺語を比較する"
+      ],
+      "teacher_cautions": [
+        "Attention Weightを人間の説明や因果関係そのものと断定しない"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 30,
+      "time_range_minutes": {
+        "start_minute": 58,
+        "end_minute": 62
+      },
+      "speech_scope_slides": [
+        30
+      ],
+      "title": "Attention Weightの可視化",
+      "visible_content": [
+        "Attention Weightを可視化してみよう！",
+        "アプリを起動"
+      ],
+      "speech_script": "では実際に見てみましょう。\n\nAttention Weightを可視化します。\n\nアプリを起動してください。\n\nまず、\n\n「この動画、やばい」\n\nを入力してください。\n\nVisualizeを押してください。\n\n（操作確認）\n\n明るい色ほど注目しています。\n\nAIは「やばい」だけを見ているのではなく、\n\n周囲の単語も参考にしています。\n\n今日はAttentionを詳しく学ぶことが目的ではありません。\n\n「AIは周囲の単語との関係を見ている」\n\nこれが分かれば十分です。",
+      "learning_goal": "Attentionが周囲のどの語を参考にするかを可視化して観察する",
+      "related_concepts": [
+        "Attention Weight",
+        "可視化",
+        "文脈"
+      ],
+      "related_apps": [
+        "attention_weight_app"
+      ],
+      "student_activity": [
+        "この動画、やばいを入力する",
+        "Visualizeを押す",
+        "明るさの違いを観察する"
+      ],
+      "teacher_cautions": [
+        "明るい色を注目度として読む",
+        "AIが人間と同じ意味を理解している証拠とは説明しない"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 31,
+      "time_range_minutes": {
+        "start_minute": 62,
+        "end_minute": 63
+      },
+      "speech_scope_slides": [
+        31
+      ],
+      "title": "長い文で生じた課題",
+      "visible_content": [
+        "研究者は何に困ったのか？",
+        "鬼たちは重い箱や袋をいくつも運び出し、桃太郎にささげました。",
+        "例"
+      ],
+      "speech_script": "しかし研究者には別の問題がありました。\n\n例を見てください。\n\n「鬼たちは重い箱や袋をいくつも運び出し、桃太郎にささげました。」",
+      "learning_goal": "長い文中の離れた語の関係を扱う必要に気づく",
+      "related_concepts": [
+        "長距離依存",
+        "文章理解",
+        "鬼たち"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "例文を読み、主語と述語の関係を考える"
+      ],
+      "teacher_cautions": [],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 32,
+      "time_range_minutes": {
+        "start_minute": 63,
+        "end_minute": 64
+      },
+      "speech_scope_slides": [
+        32
+      ],
+      "title": "誰がささげたのか",
+      "visible_content": [
+        "問題１：誰がささげたのか分からない",
+        "最後の「ささげました」のは、誰か？",
+        "→ 鬼たち？ → 桃太郎？",
+        "ちゃんと区別できるか？",
+        "研究者は考えた 「文章の最初と最後を、どうつなげる？」"
+      ],
+      "speech_script": "質問です。\n\n最後に\n\n「ささげました」\n\nのは誰でしょう？\n\n（生徒）\n\n鬼たち\n\nですね。\n\n人間には簡単です。\n\nしかし当時のAIには難しかったのです。",
+      "learning_goal": "離れた位置にある主語と述語を結び付ける課題を確認する",
+      "related_concepts": [
+        "長距離依存",
+        "主語",
+        "述語"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "ささげた主体を答える"
+      ],
+      "teacher_cautions": [
+        "桃太郎に、は受け手であり主語ではないことを確認する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 33,
+      "time_range_minutes": {
+        "start_minute": 64,
+        "end_minute": 65
+      },
+      "speech_scope_slides": [
+        33
+      ],
+      "title": "逐次処理による情報保持の限界",
+      "visible_content": [
+        "当時のAIの限界",
+        "文章を、順番に、1語ずつ処理していた。 文章が長くなると 最初に出てきた人物との関係をうまく保てない。",
+        "すると… 前の情報がだんだん弱くなる。 →「鬼たち」と「ささげました」の関係が分からなくなる"
+      ],
+      "speech_script": "当時のAIは、\n\n文章を最初から順番に読んでいました。\n\nすると文章が長くなると、\n\n最初に出てきた情報を忘れてしまいます。\n\nその結果、\n\n「鬼たち」\n\nと\n\n「ささげました」\n\nの関係が分からなくなります。",
+      "learning_goal": "文章を順番に処理する従来方式の課題を理解する",
+      "related_concepts": [
+        "逐次処理",
+        "長期依存",
+        "RNN"
+      ],
+      "related_apps": [],
+      "student_activity": [],
+      "teacher_cautions": [
+        "当時のAI全般ではなく、主に従来の逐次型モデルの課題として説明する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 34,
+      "time_range_minutes": {
+        "start_minute": 65,
+        "end_minute": 66
+      },
+      "speech_scope_slides": [
+        34
+      ],
+      "title": "逐次処理の遅さ",
+      "visible_content": [
+        "問題２：遅い",
+        "順番に処理するので前の計算が終わらないと次に進めない。"
+      ],
+      "speech_script": "さらに問題がありました。\n\n遅い。\n\n順番に処理するので、\n\n前が終わるまで次へ進めません。\n\n研究者は困っていました。",
+      "learning_goal": "順番に計算する方式では並列化しにくいことを理解する",
+      "related_concepts": [
+        "逐次処理",
+        "並列処理",
+        "計算速度"
+      ],
+      "related_apps": [],
+      "student_activity": [],
+      "teacher_cautions": [
+        "遅さの理由を前の計算待ちとして簡潔に説明する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 35,
+      "time_range_minutes": {
+        "start_minute": 66,
+        "end_minute": 67
+      },
+      "speech_scope_slides": [
+        35
+      ],
+      "title": "文章全体を見る発想",
+      "visible_content": [
+        "研究者は発想を変えた",
+        "文章を最初から順番に読むのではなく、文章全体を一度に見渡して、関係のある単語同士を探せばいいのでは？"
+      ],
+      "speech_script": "そこで発想を変えました。\n\n最初から順番に読むのではなく、\n\n文章全体を一度に見ればよいのでは？\n\nと考えたのです。",
+      "learning_goal": "文章全体から関係する単語を同時に探す発想を理解する",
+      "related_concepts": [
+        "Attention",
+        "並列処理",
+        "文全体"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "研究者ならどう解決するか考える"
+      ],
+      "teacher_cautions": [
+        "一度に見るという表現は概念説明であり、実装の全処理が完全同時という意味ではない"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 36,
+      "time_range_minutes": {
+        "start_minute": 67,
+        "end_minute": 69
+      },
+      "speech_scope_slides": [
+        36
+      ],
+      "title": "Attention is All You NeedとTransformer",
+      "visible_content": [
+        "必要なのは、Attentionだけ",
+        "Attention is All You Need",
+        "2017年にGoogle研究チームが発表した論文",
+        "Transformer誕生"
+      ],
+      "speech_script": "2017年、\n\nGoogle研究チームが\n\n「Attention is All You Need」\n\nという論文を発表しました。\n\nこの論文の中で提案された仕組みが\n\nTransformerです。\n\n現在のChatGPTも、このTransformerを土台にしています。",
+      "learning_goal": "Attentionを中心とするTransformerの登場を歴史的に位置づける",
+      "related_concepts": [
+        "Transformer",
+        "Attention is All You Need",
+        "2017",
+        "Google"
+      ],
+      "related_apps": [],
+      "student_activity": [],
+      "teacher_cautions": [
+        "現在のChatGPTはTransformerを土台とするが、論文の原型と現在のモデルは同一ではない"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 37,
+      "time_range_minutes": {
+        "start_minute": 69,
+        "end_minute": 70
+      },
+      "speech_scope_slides": [
+        37
+      ],
+      "title": "Transformerはどう言葉を学ぶか",
+      "visible_content": [
+        "では、このTransformerを赤ちゃんに与えると、本当に言葉を話せるようになるのでしょうか？"
+      ],
+      "speech_script": "では、\n\nこのTransformerを赤ちゃんに与えると、\n\n本当に言葉を話せるようになるのでしょうか？\n\nここから皆さんも研究者です。",
+      "learning_goal": "Transformerだけでは言葉を生成できず、データによる学習が必要だと考える",
+      "related_concepts": [
+        "Transformer",
+        "学習",
+        "言語モデル"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "Transformerを赤ちゃんに与えたら話せるか予想する"
+      ],
+      "teacher_cautions": [
+        "モデル構造と学習済み能力を区別する"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 38,
+      "time_range_minutes": {
+        "start_minute": 70,
+        "end_minute": 90
+      },
+      "speech_scope_slides": [
+        38
+      ],
+      "title": "言語モデルを作る実習",
+      "visible_content": [
+        "あなたも研究者になって 言語モデルを作ってみよう"
+      ],
+      "speech_script": "【20分確保】\n\nここからは実習です。\n\n皆さんはAI研究者になったつもりで取り組んでください。\n\nこの赤ちゃんは、\n\n言葉を知りません。\n\n主語も知りません。\n\n桃太郎も知りません。\n\nただ単語の並びだけを見ています。\n\n今から童話を読ませて、\n\n言葉を学習させます。\n\n（Colab操作説明）\n\nまずURLを開いてください。\n\nランタイムに接続してください。\n\n「すべて実行」を押してください。\n\n（巡回しながら支援）\n\n学習中\n\nlossという値が表示されています。\n\nこれは間違いの大きさです。\n\n小さくなるほど賢くなっています。\n\n（学習終了後）\n\nでは文章生成を試してみましょう。\n\n「おじいさんは」\n\nなどを入力してください。\n\nどんな文章が出てきますか？\n\n（生徒同士で共有）\n\nここで重要なのは、\n\nAIは意味を理解しているわけではありません。\n\n大量の文章から、\n\n次の単語を予測する力を身につけているのです。\n\n皆さんは今、\n\n生成AIの最も基本的な仕組みを体験しました。",
+      "learning_goal": "童話を学習して次単語予測と文章生成を体験する",
+      "related_concepts": [
+        "言語モデル",
+        "Colab",
+        "loss",
+        "次単語予測",
+        "文章生成"
+      ],
+      "related_apps": [
+        "colab_language_model"
+      ],
+      "student_activity": [
+        "Colabを開く",
+        "ランタイムに接続する",
+        "すべて実行する",
+        "lossの変化を観察する",
+        "書き出しを入力して文章を生成する",
+        "結果を共有する"
+      ],
+      "teacher_cautions": [
+        "コード理解を主目的にしない",
+        "lossは間違いの大きさとして説明する",
+        "lossが小さいことだけで実用的な文章生成能力を保証しない",
+        "AIが意味を理解しているとは説明しない"
+      ],
+      "source_alignment": "exact_slide"
+    },
+    {
+      "slide_number": 39,
+      "time_range_minutes": {
+        "start_minute": 90,
+        "end_minute": 100
+      },
+      "speech_scope_slides": [
+        39
+      ],
+      "title": "後半のワークシートとまとめ",
+      "visible_content": [
+        "ワークシートにチャレンジしよう"
+      ],
+      "speech_script": "【ワークシート10分】\n\n最後にワークシートに取り組んでください。\n\n今日学んだことを整理しましょう。\n\nAIはなぜ文章を生成できるのか。\n\n言葉をどのように扱っているのか。\n\n自分の言葉でまとめてみてください。\n\n（巡回）\n\n【締め】\n\n今日皆さんは、\n\nWord2Vec\n\nAttention\n\nTransformer\n\nそして言語モデルの学習まで体験しました。\n\n普段使っているChatGPTも、\n\n基本的には今日学んだ仕組みの延長線上にあります。\n\n生成AIは魔法ではありません。\n\n大量の文章から学習し、\n\n次の単語を予測しているのです。\n\n今日の授業を通して、\n\n生成AIを使うだけでなく、\n\nその仕組みについても考えてもらえたら嬉しいです。\n\nありがとうございました。",
+      "learning_goal": "Word2Vec、Attention、Transformer、言語モデルの関係を自分の言葉で整理する",
+      "related_concepts": [
+        "ワークシート",
+        "振り返り",
+        "次単語予測"
+      ],
+      "related_apps": [],
+      "student_activity": [
+        "ワークシートに取り組む",
+        "AIが文章を生成できる理由を自分の言葉でまとめる"
+      ],
+      "teacher_cautions": [
+        "生成AIを魔法として捉えず、学習と次単語予測の延長として整理する"
+      ],
+      "source_alignment": "exact_slide"
+    }
+  ]
+}
